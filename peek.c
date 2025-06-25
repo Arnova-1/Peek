@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TRESHOLD 64
+
+int cmp_string(const void *a, const void *b) {
+  return strcmp(*(char **)a, *(char **)b);
+}
+
 int main(int argc, char *argv[]) {
   printf("Filename\n");
   for(int i = 0; i < 15; i++) {
@@ -35,19 +41,10 @@ int main(int argc, char *argv[]) {
     count++;
   }
   
-  // Bubble sort array based of name
-  for(int i = 0; i < count - 1; i++) {
-    for(int j = 0; j < count - 1 - i; j++) {
-      if (strcmp(array[j], array[j + 1]) > 0) {
-        char *tmp = array[j];
-        array[j] = array[j + 1];
-        array[j + 1] = tmp;
-      }
-    }
-  }
+  qsort(array, count, sizeof(char *), cmp_string);
   
   for (int i = 0; i < count; i++) {
-    printf("%s\n", array[i]);
+    printf("\033[34m%s\033[0m\n", array[i]);
     free(array[i]);
   }
 
